@@ -24,7 +24,7 @@ function setTable(data, index){
         },
         callback: function (data, pagination) {
             var action = '';
-            if(index === 'update' && role === 'admin')   action = '                        @role("admin")<th scope="col">Action</th>\n@endrole';
+            if(index === 'update' && role === 'admin')   action = '                        <th scope="col">Action</th>\n';
             var dataHtml = '<table class="table table-bordered">\n' +
                 '                    <thead>\n' +
                 '                    <tr>\n' +

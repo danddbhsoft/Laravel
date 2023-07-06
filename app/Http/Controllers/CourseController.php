@@ -180,15 +180,17 @@ class CourseController extends Controller
         $file = $request->file('file')->getRealPath();
         $array = Excel::toArray(new CourseImport, $file);
         for($i = 0; $i < count($array[0]); $i++){
-            if(gettype($array[0][0]['start_time']) !== 'string' && gettype($array[0][0]['end_time']) !== 'string') {
+            if(gettype($array[0][$i]['start_time']) !== 'string') {
                 $array[0][$i]['start_time'] = Carbon::instance(Date::excelToDateTimeObject($array[0][$i]['start_time']))
                     ->format('Y-m-d');
-                $array[0][$i]['end_time'] = Carbon::instance(Date::excelToDateTimeObject($array[0][$i]['end_time']))
-                    ->format('Y-m-d');
-            }
-            if(gettype($array[0][0]['start_time']) === 'string' && gettype($array[0][0]['end_time']) === 'string'){
+            }else{
                 $array[0][$i]['start_time'] = Carbon::parse($array[0][$i]['start_time'])
                     ->format('Y-m-d');
+            }
+            if(gettype($array[0][$i]['end_time']) !== 'string'){
+                $array[0][$i]['end_time'] = Carbon::instance(Date::excelToDateTimeObject($array[0][$i]['end_time']))
+                    ->format('Y-m-d');
+            }else{
                 $array[0][$i]['end_time'] = Carbon::parse($array[0][$i]['end_time'])
                     ->format('Y-m-d');
             }
